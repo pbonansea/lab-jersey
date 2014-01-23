@@ -128,7 +128,7 @@ public class UserController {
 
 		store.remove(id);
 
-		return Response.ok("user deleted").build();
+		return Response.ok("<status>success</status>").build();
 
 	}
 
