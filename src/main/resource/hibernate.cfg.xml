@@ -6,9 +6,9 @@
 	<session-factory>
 		<property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
 		<property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/killrush_fu?characterEncoding=UTF-8</property>
-		<property name="hibernate.connection.username">kilrush</property>
-		<property name="hibernate.connection.password">QVPcftDdX7pq</property>
+		<property name="hibernate.connection.url"></property>
+		<property name="hibernate.connection.username"></property>
+		<property name="hibernate.connection.password"></property>
 		<!-- jdbc connection pool (use the built-in) -->
         <property name="connection.pool_size">10</property>
 		<!-- all executed SQL to stdout -->
