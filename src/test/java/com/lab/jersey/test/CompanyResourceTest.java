@@ -13,13 +13,11 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.sun.jersey.api.client.ClientResponse;
-
 /**
  * @author paolobonansea
  *
  */
-public class AddressControllerTest extends BaseTest {
+public class CompanyResourceTest extends BaseTest {
 
 	/**
 	 * @throws java.lang.Exception
@@ -48,11 +46,12 @@ public class AddressControllerTest extends BaseTest {
 	@Test
 	public void testGetAll() {
 
-		ClientResponse response = service.path("address").path("all")
-				.get(ClientResponse.class);
-		
-		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		Response response = service.path("company")
+				.path("all")
+				.request().get(Response.class);
 
+		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+		
 	}
 
 }

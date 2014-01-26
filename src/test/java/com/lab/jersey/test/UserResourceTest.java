@@ -5,6 +5,7 @@ package com.lab.jersey.test;
 
 import static org.junit.Assert.assertEquals;
 
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -14,13 +15,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.sun.jersey.api.client.ClientResponse;
+import com.lab.jersey.hibernate.HibernateUtil;
 
 /**
  * @author paolobonansea
  * 
  */
-public class UserControllerTest extends BaseTest {
+public class UserResourceTest extends BaseTest {
 	
 	/**
 	 * @throws java.lang.Exception
@@ -49,11 +50,12 @@ public class UserControllerTest extends BaseTest {
 	@Test
 	public void testCreate() {
 		
-		String jsonObject = "{\"lastName\":\"last name 1\",\"name\":\"test name 1\",\"idAddress\":\"1\"}";
+		String userJsonObject = "{\"lastName\":\"last name 1\",\"name\":\"test name 75\",\"cityId\":\"2\", \"email\":\"test@test.com\", \"login\":\"test\"}";
 		
-		ClientResponse response = service.path("user").path("create")
-				.type(MediaType.APPLICATION_JSON)
-				.post(ClientResponse.class, jsonObject);
+		Response response = service.path("user").path("create")
+				.request(MediaType.APPLICATION_JSON)
+				.post(Entity.entity(userJsonObject, 
+						MediaType.APPLICATION_JSON), Response.class);
 				
 		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
 				
@@ -62,12 +64,13 @@ public class UserControllerTest extends BaseTest {
 	@Test
 	public void testUpdate() {
 
-		String jsonObject = "{ \"id\": \"1\", \"lastName\":\"last name 1\",\"name\":\"test name 1\",\"idAddress\":\"1\"}";
-		
-		ClientResponse response = service.path("user").path("update")
-				.type(MediaType.APPLICATION_JSON)
-				.post(ClientResponse.class, jsonObject);
-		
+		String userJsonObject = "{ \"id\": \"8\", \"lastName\":\"last name 1\",\"name\":\"test name 1\",\"cityId\":\"1\"}";
+
+		Response response = service.path("user").path("update")
+				.request(MediaType.APPLICATION_JSON)
+				.post(Entity.entity(userJsonObject, 
+						MediaType.APPLICATION_JSON), Response.class);
+
 		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
 
 	}
@@ -75,10 +78,10 @@ public class UserControllerTest extends BaseTest {
 	@Test
 	public void testDelete() {
 
-		ClientResponse response = service.path("user").path("delete/" + 1)
-				.type(MediaType.APPLICATION_JSON)
-				.post(ClientResponse.class);
-		
+		Response response = service.path("user").path("delete/" + 1)
+				.request()
+				.post (Entity.text("payload"), Response.class);
+
 		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
 
 	}
@@ -86,9 +89,10 @@ public class UserControllerTest extends BaseTest {
 	@Test
 	public void testGetById() {
 
-		ClientResponse response = service.path("user/" + 1)
-				.get(ClientResponse.class);
-		
+		Response response = service.path("user/" + 2)
+				.request()
+				.get(Response.class);
+
 		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
 
 	}
@@ -96,30 +100,36 @@ public class UserControllerTest extends BaseTest {
 	@Test
 	public void testGetAll() {
 
-		ClientResponse response = service.path("user").path("all")
-				.get(ClientResponse.class);
+		Response response = service.path("user")
+				.path("all")
+				.request()
+				.get(Response.class);
 		
 		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
 
 	}
  	
 	@Test
-	public void testGetByCountryId() {
+	public void testGetByCityId() {
 
-		ClientResponse response = service.path("user").path("country/" + 1)
-				.get(ClientResponse.class);
-		
+		Response response = service.path("user")
+				.path("city/" + 1)
+				.request(MediaType.APPLICATION_JSON)
+				.get(Response.class);
+
 		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
 
 	}
 	
 	@Test
-	public void testGetByCompanyIdCountryId() {
+	public void testGetByCityIdCompanyId() {
 
-		ClientResponse response = service.path("user").path("company/" + 1)
-				.path("country/" + 1)
-				.get(ClientResponse.class);
-		
+		Response response = service.path("user")
+				.path("city/" + 1)
+				.path("company/" + 1)
+				.request(MediaType.APPLICATION_JSON)
+				.get(Response.class);
+
 		assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
 
 	}

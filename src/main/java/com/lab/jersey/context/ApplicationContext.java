@@ -3,43 +3,26 @@
  */
 package com.lab.jersey.context;
 
-import java.util.Map;
+import org.apache.log4j.Logger;
+import org.glassfish.jersey.jackson.JacksonFeature;
+import org.glassfish.jersey.server.ResourceConfig;
 
-import com.sun.jersey.api.core.ResourceConfig;
 
 /**
- * Optional class to initialize things in the context, for example data base
- * connection. For this example disabled, to enabled should change the web.xml.
  * 
  * @author paolobonansea
  * 
  */
 public class ApplicationContext extends ResourceConfig {
+	
+	private static Logger LOG = Logger.getLogger(ApplicationContext.class);
 
 	public ApplicationContext() {
-
-		System.out.println("application initialized");
-
-	}
-
-	@Override
-	public boolean getFeature(String arg0) {
-		return false;
-	}
-
-	@Override
-	public Map<String, Boolean> getFeatures() {
-		return null;
-	}
-
-	@Override
-	public Map<String, Object> getProperties() {
-		return null;
-	}
-
-	@Override
-	public Object getProperty(String arg0) {
-		return null;
-	}
-
+		
+        register(new ApplicationBinder());
+        register(JacksonFeature.class);
+        LOG.info("application initialized");
+        
+    }
+	
 }
